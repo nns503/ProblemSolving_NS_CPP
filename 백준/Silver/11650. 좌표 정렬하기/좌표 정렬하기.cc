@@ -2,11 +2,13 @@
 #include <algorithm>
 #include <string>
 
+// 좌표 구조 
 typedef struct Point{
 	int x; // x
 	int y; // y
 }P;
 
+// compare 재정의  
 int compare(Point p1, Point p2){
 	if(p1.x==p2.x){
 		return p1.y<p2.y;
@@ -30,7 +32,7 @@ int main(void){
 	
 	sort(point,point+n,compare);
 	
-	for(int i=0;i<n;i++){
+	for(int i=0;i<n;i++){ 
 		cout << point[i].x << " " << point[i].y << "\n" ;	
 	}
 	
