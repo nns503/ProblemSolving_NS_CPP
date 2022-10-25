@@ -29,8 +29,7 @@ int main(){
 			else st.pop();
 		}
 		
-		if(x==0) cout << "YES\n";
-		else cout << "NO\n";
+		cout << (x==0?"YES\n":"NO\n");
 		
 		x=0;
 	}
