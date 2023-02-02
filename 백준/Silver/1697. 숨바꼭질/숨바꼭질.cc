@@ -13,7 +13,7 @@ int BFS(int n, int k){
 	bool out = false;
 	int number = 0;
 	check[n] = 1;
-	q.push(n);
+	q.push(n);	
 	int max = (n>k)?n:k;
 	if(n==k) return 0;
 	while(!q.empty()){
@@ -30,7 +30,7 @@ int BFS(int n, int k){
 				break;
 			}
 			
-			if(check[z]==0&&z>=0&&z<=max*2){
+			if(check[z]==0&&z>=0&&z<=100001){
 				q.push(z);
 				check[z] = check[x]+1;
 			}
