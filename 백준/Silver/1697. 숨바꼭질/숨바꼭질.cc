@@ -5,8 +5,8 @@
 
 using namespace std;
 
-vector<int> cp[200005];
-int check[200005];
+vector<int> cp[100004];
+int check[100004];
 
 int BFS(int n, int k){
 	queue<int> q;
@@ -43,7 +43,7 @@ int BFS(int n, int k){
 int main(void){
 	int n,k;
 	cin >> n >> k;
-	fill_n(check,200005,0);
+	fill_n(check,100004,0);
 	
 	cout << BFS(n,k);
 	return 0;
