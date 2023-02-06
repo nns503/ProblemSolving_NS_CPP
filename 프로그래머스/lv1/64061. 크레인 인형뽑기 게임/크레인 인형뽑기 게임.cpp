@@ -19,12 +19,11 @@ int solution(vector<vector<int>> board, vector<int> moves) {
                 if(!s.empty()&&s.top()==target){
                     s.pop();
                     answer+=2;
-                    break;
                 }
                 else{
                     s.push(target);
-                    break;
-                }                 
+                }
+                break;
             }
             
         }
