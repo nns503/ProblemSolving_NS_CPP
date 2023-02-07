@@ -7,7 +7,5 @@ long long solution(int price, int money, int count)
         answer+=price*i;
     }
     
-    if(answer < 0) return 0;
-
     return (answer-money>0)?answer-money:0;
 }
