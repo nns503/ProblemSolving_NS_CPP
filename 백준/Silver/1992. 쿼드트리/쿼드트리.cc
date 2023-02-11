@@ -2,8 +2,8 @@
 #include <vector>
 
 using namespace std;
-//vector<vector<int>> v(64,vector<int>(64,0));
-int v[64][64];
+vector<vector<int>> v(64, vector<int>(64,0));
+
 void makeTree(int y, int x, int size){
     int start = v[y-size][x-size]; 
     int check = true;
