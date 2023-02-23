@@ -6,28 +6,11 @@ string wheel[5];
 int K;
 
 void setWheel(int n, int dir){
-	int temp;
-	int start = wheel[n][0];
-	int end = wheel[n][7];	
 	if(dir==1){
-		temp = start;
-		for(int i=0;i<7;i++){
-			int t = wheel[n][i+1];
-			wheel[n][i+1] = temp;
-			temp = t;
-			
-		}
-		wheel[n][0] = temp;
-		
+		rotate(wheel[n].begin(), wheel[n].begin()+7, wheel[n].end());	
 	}
 	else{
-		temp = end;		
-		for(int i=7;i>0;i--){
-			int t = wheel[n][i-1];
-			wheel[n][i-1] = temp;
-			temp = t;
-		}	
-		wheel[n][7] = temp;
+		rotate(wheel[n].begin(), wheel[n].begin()+1, wheel[n].end());
 	}
 }
 
