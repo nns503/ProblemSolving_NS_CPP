@@ -9,7 +9,6 @@ int board[9][9];
 int cpy[9][9];
 int dy[4] = {1, 0, -1, 0};
 int dx[4] = {0, 1, 0, -1};
-vector<pair<int, int>> vir;
 vector<pair<int, int>> zero;
 vector<int> v;
 queue<pair<int, int>> Q;
@@ -52,8 +51,7 @@ int main(void){
 	for(int i=0; i<n; i++){
 		for(int j=0; j<m ;j++){
 			cin >> board[i][j];
-			if(board[i][j] == 2) vir.push_back({i,j});
-			else if(board[i][j] == 0) zero.push_back({i,j});
+			if(board[i][j] == 0) zero.push_back({i,j});
 		}
 	}
 	
