@@ -3,6 +3,7 @@
 using namespace std;
 
 int n, en;
+long long cnt;
 set<int> s;
 int num[100001];
 int main(void){
@@ -12,16 +13,13 @@ int main(void){
 	for(int i=0; i<n; i++){
 		cin >> num[i];
 	}
-	long long cnt = 0;
-	s.insert(num[0]);
 	
 	for(int st=0; st<n; st++){
-		while(en<n && s.find(num[en+1])==s.end()){
-			en++;
-			if(en == n) break;
+		while(en<n && s.find(num[en])==s.end()){
 			s.insert(num[en]);
+			en++;
+			cnt += s.size();
 		}
-		cnt += s.size(); 
 		s.erase(num[st]);
 	}
 	
