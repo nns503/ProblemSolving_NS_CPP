@@ -42,7 +42,7 @@ int main(void){
 			r[1] = 1000000;
 			break;
 		}
-		if(r[1]>500000) break;
+		if(r[1]>r[0]) break;
 	}
 	
 	t = n;
@@ -60,7 +60,7 @@ int main(void){
 		}
 		r[2]++;
 		t++;
-		if(r[2]>500000) break;
+		if(r[2]>r[0]) break;
 	}	
 	int answer = *min_element(r.begin(), r.end());
 	cout << answer;
