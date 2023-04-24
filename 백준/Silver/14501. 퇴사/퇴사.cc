@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#define X first
-#define Y second
-
 using namespace std;
 
 int dp[17];
