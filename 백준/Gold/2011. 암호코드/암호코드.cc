@@ -28,18 +28,17 @@ int main(void){
 			dp[i+1][1] += dp[i-1][1] % 1000000;
 			i++;
 			prv = 0;
+			continue;
+		}
+		dp[i][0] += dp[i-1][1];
+		if(prv == 1 || (prv == 2 && cur <= 6)){
+			dp[i][0] += dp[i-1][0] % 1000000;
+			dp[i][1] += dp[i-1][0] % 1000000;
 		}
 		else{
-			dp[i][0] += dp[i-1][1];
-			if(prv == 1 || (prv == 2 && cur <= 6)){
-				dp[i][0] += dp[i-1][0] % 1000000;
-				dp[i][1] += dp[i-1][0] % 1000000;
-			}
-			else{
-				dp[i][0] += dp[i-1][0] % 1000000;
-			}
-			prv = cur;
+			dp[i][0] += dp[i-1][0] % 1000000;
 		}
+		prv = cur;
 	} 
 	cout << (dp[s.size()][0] + dp[s.size()][1]) % 1000000;
 	return 0;
