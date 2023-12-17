@@ -1,31 +1,38 @@
 #include <bits/stdc++.h>
-#define X first
-#define Y second
+#define a first
+#define b second
+
 
 using namespace std;
 
-int tower[500001];
+int n;
+stack<pair<int, int>> s;
+int h, num;
+vector<int> arr;
 
 int main(void){
-	//ios::sync_with_stdio(0);
-	//cin.tie(0);
+	ios::sync_with_stdio(0);
+	cin.tie(0);	
 	
-	stack<pair<int, int>> S;
+	s.push({0, 0x3f3f3f3f});
 	
-	int n;
 	cin >> n;
 	
-	S.push({100000001, 0});
-	for(int i=1; i<=n; i++){
-		cin >> tower[i];
+	for(int i=0; i<n; i++){
+		cin >> h;
+		arr.push_back(h);
 	}
 	
-	for(int i=1; i<=n; i++){
-		while(S.top().X<=tower[i]){
-			S.pop();
+	while(n > num){
+		
+		while(s.top().b < arr[num]){
+			s.pop();
 		}
-		cout << S.top().Y << ' ';
-		S.push({tower[i], i});
+		
+		cout << s.top().a << ' ';
+		s.push({num+1, arr[num]});
+		num++;
+		
 	}
 	
 	return 0;
