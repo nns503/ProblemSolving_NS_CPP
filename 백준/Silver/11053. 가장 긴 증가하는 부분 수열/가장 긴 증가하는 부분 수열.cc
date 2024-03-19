@@ -3,29 +3,28 @@
 using namespace std;
 
 int n;
-int num[1001];
-int len[1001];
+vector<int> answer;
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	for(int i=1; i<=n; i++){
-		cin >> num[i];
-	}
-	
-	fill(len+1, len+1+n, 1);
-	
-	for(int i=2; i<=n; i++){
-		for(int j=1; j<i; j++){
-			if(num[i] > num[j]){
-				len[i] = max(len[i], len[j]+1); 
-			}
-		}
-	}
-	
-	cout << *max_element(len+1, len+n+1);
-		
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> n;
+
+    int a; cin >> a; answer.push_back(a);
+
+    for(int i=1; i<n; i++){
+        int cur; cin >> cur;
+        if(answer.back() < cur){
+            answer.push_back(cur);
+        }
+        else{
+            int index = lower_bound(answer.begin(), answer.end(), cur) - answer.begin();
+            answer[index] = cur;
+        }
+    }
+
+    cout << answer.size();
+
+    return 0;
 }
