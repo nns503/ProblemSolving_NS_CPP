@@ -4,7 +4,6 @@ using namespace std;
 
 int m, n, l;
 int answer;
-vector<int> arr;
 
 int getDist(int x, int a, int b){
     return (abs(x - a) + b);
@@ -16,26 +15,32 @@ int main(void){
     
     cin >> m >> n >> l;
 
+    vector<int> arr(m);
     for(int i=0; i<m; i++){
-        int x; cin >> x;
-        arr.push_back(x);
+        cin >> arr[i];
     }
 
     sort(arr.begin(), arr.end());
 
-    for(int i=0; i<n; i++){
-        int a, b, find;
-        cin >> a >> b;
-        int index = upper_bound(arr.begin(), arr.end(), a) - arr.begin();
-        
-        if(index != m && abs(arr[index] - a) <= abs(arr[index-1] - a)){
-            find = arr[index];
-        }    
-        else find = arr[index-1];
+    int a, b, find;
 
-        int dist = getDist(find, a, b);
-        if(dist <= l) answer++;
+    for(int i=0; i<n; i++){
+        cin >> a >> b;
+        int st = 0, en = m-1;
+
+        while(st<=en){
+            int mid = (st+en)/2;
+            if(getDist(arr[mid], a, b) <= l){
+                answer++;
+                break;
+            }
+            else if(arr[mid] < a){
+                st = mid+1;
+            }
+            else en = mid-1;
+        }
     }
+    
 
     cout << answer;
     return 0;
