@@ -1,52 +1,27 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-bool half(int t, int a){
-	if(a>=t){
-		return true;
-	}
-	else{
-		return false;
-	} 
-} 
+int n, r, c;
+int cnt = 0;
+int Z(int y, int x, int len, int num){
+    if(y == r && x == c) return num;
+    
 
-int Z(int n, int r, int c){
-	int t = 1 << n;
-	int xt = t/2;
-	int yt = t/2;
-	int z = 0;
-	int s = 1 << 2*(n-1);
-	for(int i=1;i<=n;i++){
-		t /= 2;
-		if(half(xt,c)&&half(yt,r)){
-			xt += t/2;
-			yt += t/2;
-			z += s*3;
-		}
-		else if(!half(xt,c)&&half(yt,r)){
-			xt -= t/2;
-			yt += t/2;
-			z += s*2;			
-		}
-		else if(half(xt,c)&&!half(yt,r)){
-			xt += t/2;
-			yt -= t/2;
-			z += s;			
-		}
-		else if(!half(xt,c)&&!half(yt,r)){
-			xt -= t/2;
-			yt -= t/2;			
-		}				
-		s /= 4;
-	}
-	return z;
+    int l = len/2;
+    int mul = len * len / 4;
+    
+    if(l + y> r && l + x> c) return Z(y, x, l, num);
+    else if(l + y> r && l + x<= c) return Z(y, x+l, l, num + mul);
+    else if(l + y <= r && l + x> c) return Z(y+l, x, l, num + mul*2);
+    else if(l + y<= r && l + x<= c) return Z(y+l, x+l, l, num + mul*3);
 }
 
 int main(void){
-	int n,r,c;
-	cin >> n >> r >> c;
-	cout << Z(n,r,c);
-	return 0;
-}
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
+    cin >> n >> r >> c;
+    cout << Z(0, 0, (1<<n), 0);
+    return 0;
+}
