@@ -1,48 +1,47 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int map[129][129];
-int blue = 0, white = 0;
+int white, blue;
+int board[150][150];
 
-void paper(int x, int y, int size){
-	int color = map[y][x];
-	bool same = true;
-	for(int i=y;i<y+size;i++){
-		for(int j=x;j<x+size;j++){
-			if(color!=map[i][j]){
-				same=false;
-				break;
-			}
-		}
-		if(same==false) break;
-	}
-	
-	if(same==true){
-		if(color==0) white++;
-		else if(color==1) blue++;
-	}
-	else if(same==false){
-		paper(x+size/2,y,size/2);
-		paper(x,y,size/2);
-		paper(x,y+size/2,size/2);
-		paper(x+size/2,y+size/2,size/2);
-	}
+bool sameCheckBoard(int y, int x, int len){
+    for(int i=y; i<y+len; i++){
+        for(int j=x; j<x+len; j++){
+            if(board[y][x] != board[i][j]) return false;
+        }
+    }
+    return true;
+}
+
+void func(int y, int x, int len){
+    if(sameCheckBoard(y, x, len)){
+        if(board[y][x] == 0) white++;
+        else blue++;
+        return ;
+    }
+    int l = len/2;
+    func(y, x, l);
+    func(y, x+l, l);
+    func(y+l, x, l);
+    func(y+l, x+l, l);
 }
 
 int main(void){
-	int n;
-	cin >> n;
-	
-	for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
-			cin >> map[i][j];
-		}
-	}
-	
-	paper(0,0,n);
-	
-	cout << white << "\n" << blue;
-	
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+
+    for(int y=0; y<n; y++){
+        for(int x=0; x<n; x++){
+            cin >> board[y][x];
+        }
+    }
+
+    func(0, 0, n);
+
+    cout << white << '\n' << blue;
+    return 0;
 }
