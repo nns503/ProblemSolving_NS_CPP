@@ -2,50 +2,48 @@
 
 using namespace std;
 
-int neg, zero, pos;
-int board[2500][2500];
+int n;
+int board[2501][2501];
+int a, b, c;
 
-bool check(int x,int y, int size){
-	for(int i=x;i<x+size;i++){
-		for(int j=y;j<y+size;j++){
-			if(board[x][y]!=board[i][j]) return false; 
-		}
-	}	
-	return true;
+void func(int y, int x, int len){
+    int cur = board[y][x];
+    for(int i=y; i<y+len; i++){
+        for(int j=x; j<x+len; j++){
+            if(cur != board[i][j]){
+                int l = len/3;
+                func(y, x, l);
+                func(y, x+l, l);
+                func(y, x+l*2, l);
+                func(y+l, x, l);
+                func(y+l*2, x, l);
+                func(y+l, x+l, l);
+                func(y+l, x+l*2, l);
+                func(y+l*2, x+l, l);
+                func(y+l*2, x+l*2, l);
+                return;
+            }
+        }
+    }
+    if(cur == -1) a++;
+    else if(cur == 0) b++;
+    else if(cur == 1) c++;
 }
-
-void solution(int x, int y, int size){	
-	if(check(x,y,size)){
-		if(board[x][y]==1) pos++;
-		else if(board[x][y]==-1) neg++;
-		else zero++;		
-	}
-	else{
-		solution(x, y, size/3);
-		solution(x+size/3, y, size/3);
-		solution(x+size/3*2, y, size/3);
-		solution(x, y+size/3, size/3);
-		solution(x, y+size/3*2, size/3);
-		solution(x+size/3, y+size/3, size/3);
-		solution(x+size/3*2, y+size/3, size/3);
-		solution(x+size/3, y+size/3*2, size/3);
-		solution(x+size/3*2, y+size/3*2, size/3);
-	}
-}
-
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	int N;
-	cin >> N;
-	for(int i=0;i<N;i++){
-		for(int j=0;j<N;j++) cin >> board[i][j];
-	}
-	
-	solution(0,0,N);
-	cout << neg << '\n' << zero << '\n' << pos;
-	
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    cin >> n;
+
+    for(int y=0; y<n; y++){
+        for(int x=0; x<n; x++){
+            cin >> board[y][x];
+        }
+    }
+
+    func(0, 0, n);
+    cout << a << '\n' << b << '\n' << c;
+    return 0;
 }
 
