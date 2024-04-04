@@ -1,46 +1,29 @@
-#include <iostream>
-#include <algorithm>
-#include <cmath>	
-#include <string>
+#include <bits/stdc++.h>
+#define A first
+#define B second
 
 using namespace std;
 
-struct Profile{
-	char name[120];
-	int age;
-	int order;
-};
-
-
-struct compare{
-	bool operator()(const Profile& p1, const Profile& p2){
-		if(p1.age==p2.age){
-			return p1.order < p2.order;
-		}
-		else return p1.age < p2.age;
-	}
-};
+vector<pair<int, int>> arr(100001);
+string name[100001];
 
 int main(void){
-	using namespace std;
-	
-	int n;
-	cin >> n;
-	
-	Profile p[n];
-	
-	for(int i=0;i<n;i++){
-		cin >> p[i].age >> p[i].name;
-		p[i].order = i;
-	}
-	
-	sort(p,p+n,compare());
-	
-	for(int i=0;i<n;i++){
-		cout << p[i].age << " " << p[i].name << "\n" ;
-	}	
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-	
-	return 0;
+    int n;
+    cin >> n;
+
+    for(int i=0; i<n; i++){
+        cin >> arr[i].A;
+        cin >> name[i];
+        arr[i].B = i;
+    }
+
+    sort(arr.begin(), arr.begin() + n);
+
+    for(int i=0; i<n; i++){
+        cout << arr[i].A << ' ' << name[arr[i].B] << '\n';
+    }
+    return 0;
 }
-
