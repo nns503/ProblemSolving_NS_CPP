@@ -2,42 +2,47 @@
 
 using namespace std;
 
-int n;
-string code[51];
-
-int getSum(string s){
-	int sum = 0;
-	for(int i=0; i<s.size(); i++){
-		if(s[i]>='0'&&s[i]<='9'){
-			sum += (s[i]-'0');
-		}
-	}
-	return sum;
+int getNum(char &c){
+    if(c >= '0' && c <= '9') return c - '0';
+    else return 0; 
 }
 
-bool cmp(string a, string b){
-	
-	if(a.size()==b.size()){
-		if(getSum(a)==getSum(b)) return a < b;
-		return getSum(a) < getSum(b);
-	}
-	return a.size() < b.size();
+int sumNum(string &arr){
+    int sum = 0;
+    for(auto cur : arr){
+        sum += getNum(cur);
+    }
+
+    return sum;
 }
 
+bool cmp(string &arr1, string &arr2){
+    if(arr1.size() == arr2.size()){
+        int sum1 = sumNum(arr1);
+        int sum2 = sumNum(arr2);
+        if(sumNum(arr1) == sumNum(arr2)){
+            return arr1 < arr2;
+        }
+        return sumNum(arr1) < sumNum(arr2);            
+    
+
+    }
+    return arr1.size() < arr2.size();
+}
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	for(int i=0; i<n; i++){
-		cin >> code[i];
-	}
-	
-	sort(code, code+n, cmp);
-	
-	for(int i=0; i<n; i++){
-		cout << code[i] << '\n';
-	}
-		
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+    vector<string> arr(n);
+    for(int i=0; i<n; i++){
+        cin >> arr[i];
+    }
+
+
+    sort(arr.begin(), arr.begin()+n, cmp);
+
+    for(auto cur : arr) cout << cur << '\n';
+    return 0;
 }
