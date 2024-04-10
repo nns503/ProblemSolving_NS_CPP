@@ -1,45 +1,43 @@
-#include <iostream>
-#include <stack>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-vector<int> cp[101];
-bool check[101];
+int BFS(vector<vector<int>> &adj, int n, int st){
+    queue<int> q;
+    vector<bool> vis(n+1, false);
+    int answer = 0;
+    q.push(st); vis[st] = true;
 
-int DFS(){
-	stack<int> s;
-	int number = 0;
-	check[1] = true;
-	s.push(1);
-	while(!s.empty()){
-		int x = s.top();
-		s.pop();
-		for(int i=0;i<cp[x].size();i++){
-			int q = cp[x][i];
-			if(check[q]==false){
-				s.push(q);
-				number++;
-				check[q] = true;
-			}
-		}
-	}
-	return number;
+    while(!q.empty()){
+        auto cur = q.front(); q.pop();
+        for(auto nxt : adj[cur]){
+            if(vis[nxt]) continue;
+            answer++;
+            vis[nxt] = true;
+            q.push(nxt);
+        }
+    }
+
+    return answer;
 }
 
-
 int main(void){
-	int n,t;
-	cin >> n >> t;
-	fill_n(check,n+1,false);
-	for(int i=0;i<t;i++){
-		int a,b;
-		cin >> a >> b;
-		cp[a].push_back(b);
-		cp[b].push_back(a);
-	}
-	
-	cout << DFS();
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int T = 1;
+    int n, x, a, b;
+
+    while(T--){
+        cin >> n >> x;
+        vector<vector<int>> adj(n+1);
+        for(int i=0; i<x; i++){
+            cin >> a >> b;
+            adj[a].push_back(b);  
+            adj[b].push_back(a);          
+        }
+        cout << BFS(adj, n, 1) << '\n';
+    }
+
+    return 0;
 }
