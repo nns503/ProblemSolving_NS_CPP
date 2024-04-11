@@ -2,47 +2,51 @@
 
 using namespace std;
 
-int n;
-int board[101][101];
-bool vis[101];
+void DFS(vector<vector<bool>> &answer, vector<vector<bool>> &board, int n, int st){
+    stack<int> s;
+    s.push(st);
+    vector<bool> vis(n, false);
 
-bool DFS(int a, int target){
-	fill(vis, vis+101, false);
-	stack<int> s;
-	s.push(a);
-	while(!s.empty()){
-		int cur = s.top(); s.pop();
-		if(vis[cur] == true) continue;
-		if(a != cur) vis[cur] = true;
-		for(int i=0; i<n; i++){
-			if(vis[i]) continue;
-			if(board[cur][i] == 1) {
-				if(i == target) return true;
-				s.push(i);
-			}
-		}
-	}
-	return false;
+    while(!s.empty()){
+        auto cur = s.top(); s.pop();
+        for(int nxt=0; nxt<n; nxt++){
+            if(!board[cur][nxt]) continue;
+            if(vis[nxt]) continue;
+            answer[st][nxt] = true;
+            vis[nxt] = true;
+            s.push(nxt);
+        }
+    }
+
 }
-
 int main(void){
-	
-	cin >> n;
-	
-	for(int y=0; y<n; y++){
-		for(int x=0; x<n; x++){
-			cin >> board[y][x];
-		}
-	}	
-	
-	for(int i=0; i<n; i++) DFS(i, i);
-	
-	for(int y=0; y<n; y++){
-		for(int x=0; x<n; x++){
-			cout << DFS(y, x) << ' ';
-		}
-		cout << '\n';
-	}
-	
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int T, n, a;
+    
+    T = 1;
+
+    while(T--){
+        cin >> n;
+        vector<vector<bool>> board(n, vector<bool>(n));
+        vector<vector<bool>> answer(n, vector<bool>(n));
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                cin >> a;
+                if(a) board[i][j] = true;
+            }
+        }
+
+        for(int i=0; i<n; i++) DFS(answer, board, n, i);
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                cout << answer[i][j] << ' ';
+            }
+            cout << '\n';
+        }
+    }
+    return 0;
 }
