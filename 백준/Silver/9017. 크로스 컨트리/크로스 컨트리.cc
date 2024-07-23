@@ -31,7 +31,6 @@ int main(void){
         int sum = 0x3f3f3f3f;
         for(int i=1; i<=200; i++){
             if(score[i].size() < 6) continue;
-            sort(score[i].begin(), score[i].end());
             int temp = 0;
             for(int j=0; j<4; j++) temp += score[i][j];
             if(sum > temp){
