@@ -1,4 +1,3 @@
--- 코드를 입력하세요
-SELECT a.animal_id, a.name, a.datetime
-from animal_ins a
-order by a.name, a.datetime desc
+select animal_id, name, datetime
+from animal_ins
+order by name, datetime desc
