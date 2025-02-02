@@ -1,10 +1,8 @@
--- 코드를 입력하세요
-SELECT ai.name, ai.datetime
-from animal_ins ai
-where not exists (
-    select 1
-    from animal_outs ao
-    where ai.animal_id = ao.animal_id
-)
-order by ai.datetime
-FETCH FIRST 3 ROWS ONLY;
+select
+    i.name as name,
+    i.datetime as datetime
+from animal_ins i
+left join animal_outs o on i.animal_id = o.animal_id
+where o.animal_id is null
+order by i.datetime asc
+limit 3
