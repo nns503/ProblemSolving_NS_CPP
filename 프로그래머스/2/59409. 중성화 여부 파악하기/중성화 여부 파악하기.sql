@@ -1,12 +1,10 @@
--- 코드를 입력하세요
-SELECT 
-    ai.animal_id,
-    ai.name, 
-    CASE
-        when ai.sex_upon_intake like 'Neutered%'
-        OR ai.sex_upon_intake like 'Spayed%'
-        then 'O'
-    else 'X'
-    end
-from animal_ins ai
-order by ai.animal_id
+select
+    animal_id,
+    name,
+    case
+    when (SEX_UPON_INTAKE like '%neutered%'
+or SEX_UPON_INTAKE like '%Spayed%') then 'O'
+else 'X'
+end as '중성화'
+from animal_ins
+order by animal_id
