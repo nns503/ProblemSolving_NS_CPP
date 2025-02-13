@@ -1,6 +1,6 @@
-SELECT MEMBER_ID, MEMBER_NAME, GENDER, DATE_FORMAT(DATE_OF_BIRTH, '%Y-%m-%d') DATE_OF_BIRTH
-FROM MEMBER_PROFILE m
-WHERE MONTH(DATE_OF_BIRTH) = '03'
-AND GENDER = 'W'
-AND TLNO is NOT NULL
-ORDER BY MEMBER_ID ASC
+select member_id, member_name, gender, date_format(Date_of_birth, '%Y-%m-%d') date_of_birth
+from member_profile 
+where month(date_of_birth) = 3
+and gender = 'W'
+and TLNO is not null
+order by member_id asc
