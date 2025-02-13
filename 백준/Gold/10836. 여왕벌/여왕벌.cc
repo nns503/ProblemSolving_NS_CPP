@@ -3,51 +3,43 @@
 using namespace std;
 
 int m, n;
-int dy[4] = {1, -1, 0, 0};
-int dx[4] = {0, 0, 1, -1};
-
-bool OOB(int y, int x){
-    return (y < 0 || x < 0 || y >= m || x >= m);
-}
-
+int dy[3] = {-1, -1, 0};
+int dx[3] = {0, -1, -1};
 int main(void){
     ios::sync_with_stdio(0);
     cin.tie(0);
-
+    
     cin >> m >> n;
-
     vector<vector<int>> board(m, vector<int>(m, 1));
-    while(n--){
-        vector<int> arr(3);
-        cin >> arr[0] >> arr[1] >> arr[2];
-        int index = 0;
-        for(int y=m-1; y>=0; y--){
-            while(arr[index] == 0){
-                index++;
-            }
-            board[y][0] += index;
-            arr[index]--;
-        }
+    vector<int> grow(2*m, 0);
 
-        for(int x=1; x<m; x++){
-            while(arr[index] == 0){
-                index++;
-            }
-            board[0][x] += index;
-            arr[index]--;
-        }
+    int a, b, c;
+    for(int i=0; i<n; i++){
+        cin >> a >> b >> c;
+        grow[a]++;
+        grow[a+b]++;
+    }
+
+    for(int i=1; i<2*m - 1; i++){
+        grow[i] += grow[i-1];
+    }
+
+    int index = 0;
+    for(int y=m-1; y>=0; y--){
+        board[y][0] += grow[index++];
+    }
+
+    for(int x=1; x<=m-1; x++){
+        board[0][x] += grow[index++];
     }
 
     for(int y=1; y<m; y++){
         for(int x=1; x<m; x++){
-            int score = 0;
-            for(int i=0; i<4; i++){
-                int ny = dy[i] + y;
-                int nx = dx[i] + x;
-                if(OOB(ny, nx)) continue;
-                score = max(score, board[ny][nx] - 1);
+            for(int i=0; i<3; i++){
+                int ny = y + dy[i];
+                int nx = x + dx[i];
+                board[y][x] = max(board[y][x], board[ny][nx]);
             }
-            board[y][x] += score;
         }
     }
 
@@ -57,5 +49,6 @@ int main(void){
         }
         cout << '\n';
     }
+
     return 0;
 }
