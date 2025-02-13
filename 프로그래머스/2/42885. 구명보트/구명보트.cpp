@@ -3,27 +3,15 @@
 using namespace std;
 
 int solution(vector<int> people, int limit) {
-    int answer = 0;
+    int answer = people.size();
     sort(people.begin(), people.end());
-    vector<bool> vis(people.size(), false);
+    int st = 0;
     int en = people.size() - 1;
-    for(int st=0; st<people.size(); st++){
-        if(vis[st]) continue;
-        if(st >= en){
-            answer++;
-            continue;
+    while(st < en){
+        if(people[st] + people[en] <= limit){
+            st++;
         }
-        while(st < en){
-            if(people[st] + people[en] <= limit){
-                vis[en] = true;
-                en--;
-                break;
-            }
-            en--;
-        }
-        vis[st] = true;
-        answer++;
+        en--;
     }
-    
-    return answer;
+    return answer - st;
 }
