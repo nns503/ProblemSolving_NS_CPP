@@ -17,14 +17,7 @@ tuple<string, int, int> getTuple(string a, int index){
         p = i;
         break;
     }
-    for(int i=p; i<=a.size(); i++){
-        if(i == a.size()){
-            aNum = stoi(a.substr(p));
-        }
-        if(a[i] >= '0' && a[i] <= '9') continue;
-        aNum = stoi(a.substr(p, i-p));
-        break;
-    }
+    aNum = stoi(a.substr(p));
     return {aHead, aNum, index};
 }
 
@@ -56,5 +49,6 @@ vector<string> solution(vector<string> files) {
         tie(str, num, index) = cur;
         answer.push_back(files[index]);
     }
+    
     return answer;
 }
