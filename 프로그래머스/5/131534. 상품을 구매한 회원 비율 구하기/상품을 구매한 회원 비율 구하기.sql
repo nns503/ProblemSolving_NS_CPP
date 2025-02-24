@@ -1,16 +1,15 @@
+with user_count as (select count(*)
+from user_info
+where year(joined) = '2021')
+
 select
-    year(o.sales_date) YEAR,
-    month(o.sales_date) MONTH,
-    count(distinct o.user_id) PURCHASED_USERS,
-    round(count(distinct o.user_id) / 
-          (
-              select count(*)
-              from user_info i
-              where year(i.joined) = '2021'
-          )
-          , 1) PUCHASED_RATIO
-from user_info u
-join online_sale o on u.user_id = o.user_id
-where year(u.joined) = '2021'
-group by year, month
-order by year, month
+    year(s.sales_date),
+    month(s.sales_date),
+    count(distinct i.user_id) as purchased_users,
+    round(count(distinct i.user_id) / (select * from user_count), 1) as puchased_ratio
+from user_info i
+join online_sale s 
+on s.user_id = i.user_id
+where year(i.joined) = '2021'
+group by year(s.sales_date), month(s.sales_date)
+order by year(s.sales_date) asc, month(s.sales_date) asc
