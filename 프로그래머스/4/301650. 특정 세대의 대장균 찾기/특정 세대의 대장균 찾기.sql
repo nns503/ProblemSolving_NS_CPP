@@ -1,8 +1,21 @@
-select
-    e1.id
-from ecoli_data e1
-left join ecoli_data e2 on e1.parent_id = e2.id
-left join ecoli_data e3 on e2.parent_id = e3.id
-where e3.id is not null
-and e3.parent_id is null
-order by e1.id asc
+with recursive ge as (
+    select
+        id,
+        parent_id,
+        1 as num
+    from ecoli_data 
+    where parent_id is null
+    union all
+    select
+        e.id,
+        e.parent_id,
+        g.num + 1 as num
+    from ecoli_data e
+    join ge g on e.parent_id = g.id
+)
+
+select  
+    id
+from ge
+where num = 3
+order by id asc
