@@ -2,31 +2,31 @@
 
 using namespace std;
 
-int n, m;
-long long answer;
-vector<long long> card;
-
 int main(void){
     ios::sync_with_stdio(0);
     cin.tie(0);
 
+    int n, m;
     cin >> n >> m;
-    for(int i=1; i<=n; i++){
+    priority_queue<long long, vector<long long>, greater<long long>> q;
+
+    for(int i=0; i<n; i++){
         int a; cin >> a;
-        card.push_back(a);
+        q.push(a);
     }
+
 
     while(m--){
-        sort(card.begin(), card.end());
-        long long sum = card[0] + card[1];
-        card[0] = sum;
-        card[1] = sum;
+        long long a = q.top(); q.pop();
+        long long b = q.top(); q.pop();
+        q.push(a+b);
+        q.push(a+b);
     }
 
-    for(auto cur : card){
-        answer += cur;
+    long long answer = 0;
+    while(!q.empty()){
+        answer += q.top(); q.pop();
     }
 
     cout << answer;
-    return 0;
 }
