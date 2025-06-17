@@ -1,41 +1,39 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    
-    public static void solution() throws IOException {
-        StringTokenizer st1 = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st1.nextToken());
-        int m = Integer.parseInt(st1.nextToken());
-        
-        PriorityQueue<Long> q = new PriorityQueue<>();
-        StringTokenizer st2 = new StringTokenizer(br.readLine());
-        
-        while (st2.hasMoreTokens()){
-            q.add(Long.parseLong(st2.nextToken()));
-        }
-
-        while(m-- > 0){
-            Long a = q.poll();
-            Long b = q.poll();
-            q.add(a+b);
-            q.add(a+b);
-        }
-
-        Long answer = 0L;
-        while(!q.isEmpty()){
-            answer += q.poll();
-        }
-
-        bw.write(String.valueOf(answer));
-    }
-
     public static void main(String[] args) throws IOException {
-        solution();
-        bw.flush();
-        bw.close();
-        br.close();
+        //그냥 가장 작은수 두개씩 n번 합치면 끝 아닌가?
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        long n = Long.parseLong(st.nextToken());
+        long m = Long.parseLong(st.nextToken());
+
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            pq.add(Long.parseLong(st.nextToken()));
+        }
+
+        for (int i = 0; i < m; i++) {
+            long x = pq.peek();
+            pq.remove(x);
+
+            long y = pq.peek();
+            pq.remove(y);
+            long sum = x + y;
+
+            pq.add(sum);
+            pq.add(sum);
+        }
+
+        long total = 0;
+        for (long card : pq) {
+            total += card;
+        }
+
+        System.out.println(total);
     }
 }
