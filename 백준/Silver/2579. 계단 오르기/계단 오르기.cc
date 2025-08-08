@@ -2,39 +2,31 @@
 
 using namespace std;
 
-int n;
-int dp[301][2];
-int step[301];
+int solve(int n, vector<int> &arr){
+    vector<int> dp(n+1, 0);
+    dp[1] = arr[1];
+    if(n >= 2) dp[2] = arr[1] + arr[2];
+    if(n >= 3) dp[3] = max(arr[1] + arr[3], arr[2] + arr[3]);
+    
+    for(int i=4; i<=n; i++){
+        dp[i] = max(dp[i-2] + arr[i], dp[i-3] + arr[i-1] + arr[i]);
+    }
 
-int solution(int n, int cnt){
-	if(dp[n][cnt]!=-1) return dp[n][cnt];
-	
-	if(cnt == 0)
-		dp[n][0] = max(solution(n-2, 1), solution(n-2, 0)) + step[n];
-	else
-		dp[n][1] = solution(n-1, 0) + step[n]; 
-	
-	return dp[n][cnt];
+    return dp[n];
 }
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	for(int i=1; i<=n; i++){
-		cin >> step[i];
-	}
-	
-	fill(&dp[0][0], &dp[0][0]+301*2, -1);
-	if(n==1){
-		cout << step[1]; 
-		return 0;
-	}
-	dp[1][0] = step[1];
-	dp[1][1] = 0;
-	dp[2][0] = step[2];
-	dp[2][1] = dp[1][0] + step[2];
-	cout << max(solution(n, 0), solution(n, 1));
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+    vector<int> arr(n+1);
+    for(int i=1; i<=n; i++){
+        cin >> arr[i];
+    }
+
+    cout << solve(n, arr);
+
+    return 0;
 }
