@@ -2,41 +2,48 @@
 
 using namespace std;
 
-int n, m;
-int t1, t2;
-vector<int> arr[101];
-int d[101];
-queue<int> q;
+int solve(int n, int a, int b, int m, vector<vector<int>> &arr){
+    vector<int> adj[n+1];
+    for(int i=0; i<arr.size(); i++){
+        int x = arr[i][0];
+        int y = arr[i][1];
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+
+    vector<int> dist(n+1, -1);
+    dist[a] = 0;
+    queue<int> q;
+    q.push(a);
+
+    while(!q.empty()){
+        auto cur = q.front(); q.pop();
+        for(auto nxt : adj[cur]){
+            if(dist[nxt] != -1) continue;
+            q.push(nxt);
+            dist[nxt] = dist[cur] + 1;
+        }
+    }
+
+    return dist[b];
+}
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	cin >> t1 >> t2;
-	cin >> m;
-	
-	fill(d, d+101, -1);
-	while(m--){
-		int x, y;
-		cin >> x >> y;
-		arr[x].push_back(y);
-		arr[y].push_back(x);
-	}	
-	
-	q.push(t1);
-	d[t1] = 0;
-	
-	while(!q.empty()){
-		int cur = q.front(); q.pop();
-		for(int nxt : arr[cur]){
-			if(d[nxt] != -1) continue;
-			d[nxt] = d[cur] + 1;
-			q.push(nxt);
-		}
-	}
-	
-	cout << d[t2];
-	
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+    int a, b;
+    cin >> a >> b;
+    int m;
+    cin >> m;
+    vector<vector<int>> arr(m, vector<int>(2));
+    for(int i=0; i<m; i++){
+        cin >> arr[i][0] >> arr[i][1];
+    }
+
+    cout << solve(n, a, b, m, arr);
+
+    return 0;
 }
