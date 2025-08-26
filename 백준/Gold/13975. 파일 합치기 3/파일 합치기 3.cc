@@ -2,33 +2,40 @@
 
 using namespace std;
 
-priority_queue<long long, vector<long long>, greater<long long>> pq;
-int T, K;
+long long solve(vector<int> &arr){
+    priority_queue<long long, vector<long long>, greater<long long>> pq;
+    for(auto cur : arr){
+        pq.push(cur);
+    }
+
+    long long answer = 0;
+
+    while(pq.size() >= 2){
+        auto a = pq.top(); pq.pop();
+        auto b = pq.top(); pq.pop();
+        pq.push(a+b);
+        answer += a+b;
+    }
+
+    return answer;
+}
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	cin >> T;
-	
-	while(T--){
-		cin >> K;
-		while(K--){
-			int a;
-			cin >> a;
-			pq.push(a);
-		}	
-		
-		long long sum = 0;
-		while(pq.size() > 1){
-			long long a = pq.top(); 
-			pq.pop();
-			long long b = pq.top();
-			pq.pop();
-			sum += (a+b);
-			pq.push(a+b);
-		}
-		cout << sum << '\n';
-		pq.pop();
-	}
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int T;
+    cin >> T;
+    
+    while(T--){
+        int k;
+        cin >> k;
+        vector<int> arr(k);
+        for(auto &cur : arr){
+            cin >> cur;
+        }
+
+        cout << solve(arr) << '\n';
+    }
+    return 0;
 }
