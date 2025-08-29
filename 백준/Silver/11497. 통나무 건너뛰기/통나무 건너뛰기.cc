@@ -6,8 +6,6 @@ int solve(int n, vector<int> &arr){
     sort(arr.begin(), arr.end());
 
     int answer = 0;
-    answer = max(arr[1] - arr[0], answer);
-    answer = max(arr[n-1] - arr[n-2], answer);
     for(int i=0; i<n-2; i++){
         answer = max(arr[i+2] - arr[i], answer);
     }
