@@ -2,44 +2,47 @@
 
 using namespace std;
 
-int n;
-int L[21];
-int J[21];
-int answer = 0;
-int pr = 0;
-int hp = 100;
+int solve(int n, vector<int> &cost, vector<int> &happy){
+    vector<vector<int>> dp(n+1, vector<int>(101, 0));
 
-void func(int cnt){
-	
-	if(hp <= 0){
-		answer = max(answer, pr - J[cnt-1]);
-		return ;
-	}
-	if(cnt == n){
-		answer = max(answer, pr);
-		return ;
-	}
-	
-	
-	for(int i=cnt; i<n; i++){
-		hp -= L[i];
-		pr += J[i];
-		func(i+1);
-		hp += L[i];
-		pr -= J[i];
-	}
+    for(int i=1; i<=n; i++){
+        int curCost = cost[i-1];
+        int curHappy = happy[i-1]; 
+        for(int k=100; k>=0; k--){
+            if(k-curCost <= 0){
+                dp[i][k] = dp[i-1][k];
+            } 
+            else{
+                dp[i][k] = max(dp[i-1][k], dp[i-1][k-curCost] + curHappy);
+            }
+        }
+    }
+
+    int answer = 0;
+    for(int i=1; i<=100; i++){
+        answer = max(answer, dp[n][i]);
+    }
+
+    return answer;
 }
+
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	
-	for(int i=0; i<n; i++) cin >> L[i];
-	for(int i=0; i<n; i++) cin >> J[i];
-	
-	func(0);
-	cout << answer;
-	
-	
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int n;
+    cin >> n;
+    vector<int> cost(n);
+    for(auto &cur: cost){
+        cin >> cur;
+    }
+
+    vector<int> happy(n);
+    for(auto &cur: happy){
+        cin >> cur;
+    }
+
+    cout << solve(n, cost, happy);
+
+    return 0;
 }
