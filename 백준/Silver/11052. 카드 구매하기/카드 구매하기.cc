@@ -1,31 +1,33 @@
 #include <bits/stdc++.h>
-#define X first
-#define Y second
 
 using namespace std;
 
-int n;
-int dp[1001];
-int card[1001];
+int solve(int n, vector<int> &arr){
+    vector<int> memo(n+1, 0);
+
+    for(int i=0; i<n; i++){
+        int cost = arr[i];
+        int cnt = i+1;
+        for(int k=cnt; k<=n; k++){
+            memo[k] = max(memo[k], memo[k-cnt] + cost);
+        }
+    }
+
+    return memo[n];
+}
 
 int main(void){
-	ios::sync_with_stdio(0);
-	cin.tie(0);
-	
-	cin >> n;
-	for(int i=1; i<=n; i++){
-		cin >> card[i];
-	}
-	
-	
-	for(int i=1; i<=n; i++){
-		dp[i] = card[i];
-		for(int j=0; i-j>=j; j++){
-			dp[i] = max(dp[i], dp[i-j] + dp[j]);
-		}
-	}
-	
-	cout << dp[n];
-	
-	return 0;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for(auto &cur : arr){
+        cin >> cur;
+    }
+
+    cout << solve(n, arr);
+
+    return 0;
 }
