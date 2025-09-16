@@ -2,45 +2,35 @@
 
 using namespace std;
 
-vector<int> solution(int N, vector<int> stages) {
-    vector<int> answer;
-    vector<int> remaining(N + 1);
-    
-    for (auto& p : stages) {
-        remaining[p - 1]++;
-    } // 1 3 2 1 0 1
-    
-    int passed = 0;
-    vector<pair<long double, int>> fail(N);
-    cout << '\n';
-    for (int i = N; i >= 0; i--) {
-        passed += remaining[i];
-        if (i == N) continue;
-        if(remaining[i] == 0 || passed == 0){
-            fail[i] = {0, i};
-            continue;
-        }
-        fail[i] = {(double)remaining[i] / passed, i};
-        cout << fail[i].first << ' ' << fail[i].second << '\n';
-    } // 0.125/0 0.444/1 0.5/2 0.5/3 0/4
-    
-    sort(fail.begin(), fail.end(), [](const auto& a, const auto& b) {
-        if (a.first != b.first)
-            return a.first > b.first;
+bool cmp(pair<double, int> a, pair<double, int> b){
+    if(a.first == b.first){
         return a.second < b.second;
-    });
-    
-    for (auto & f : fail) {
-        answer.push_back(f.second + 1);
     }
-    
-    return answer;
+    return a.first > b.first;
 }
 
-//       1 2 3 4 5 6 7 8
-//     1   *             1
-//     2 *   *   *       3
-//     3             * * 2
-//     4           *     1
-//     5                 0
-//     6       *         1
+vector<int> solution(int N, vector<int> stages) {
+    vector<int> answer;
+    map<int, int> m;
+    for(auto cur : stages){
+        m[cur]++;
+    }
+    
+    vector<pair<double, int>> arr;
+    int count = stages.size();
+    for(int i=1; i<=N; i++){
+        if(count == 0){
+            arr.push_back({0, i});
+            continue;
+        }
+        double d = (double) m[i] / count;
+        arr.push_back({d, i});
+        count -= m[i];   
+    }
+    sort(arr.begin(), arr.end(), cmp);
+    
+    for(auto cur : arr){
+        answer.push_back(cur.second);
+    }
+    return answer;
+}
