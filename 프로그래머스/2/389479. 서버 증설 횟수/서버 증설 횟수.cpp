@@ -4,26 +4,22 @@ using namespace std;
 
 int solution(vector<int> players, int m, int k) {
     int answer = 0;
-    priority_queue<int, vector<int>, greater<int>> q;
+    priority_queue<int, vector<int>, greater<int>> pq;
     
-    for(int t=0; t<players.size(); t++){
-        while(!q.empty()){
-            auto a = q.top();
-            if(a + k <= t){
-                q.pop();
-                continue;
-            }
-            break;
-        }
+    for(int i=0; i<players.size(); i++){
+        auto cur = players[i];
+        int d = cur / m;
         
-        int player = players[t];
-        int server = q.size();
-        int w = player - server * m;
-        while(w >= m){
-            w -= m;
+        while(!pq.empty()){
+            auto cur = pq.top();
+            if(cur != i) break;
+            pq.pop();
+        }
+        while(d > pq.size()){
+            pq.push(i + k);
             answer++;
-            q.push(t);
         }
     }
+    
     return answer;
 }
